@@ -1,31 +1,29 @@
-Name:		elementary-gtk
-Version:	3.1
-Release:	1%{?dist}
-Summary:	Elementary GTK theme
+Name:       elementary-gtk
+Version:    3.1
+Release:    2%{?dist}
+Summary:    Elementary GTK theme
 
-Group:		User Interface/Desktops
-License:	GPLv2+
-BuildArch:	noarch
-URL:		http://danrabbit.deviantart.com/art/elementary-gtk-theme-83104033	
-Source0:	http://www.deviantart.com/download/83104033/elementary_gtk_theme_by_danrabbit-d1dh7hd.zip
-#Patch0:		%{name}.patch
+Group:      User Interface/Desktops
+License:    GPLv2+
+BuildArch:  noarch
+URL:        http://danrabbit.deviantart.com/art/elementary-gtk-theme-83104033
+Source0:    http://www.deviantart.com/download/83104033/elementary_gtk_theme_by_danrabbit-d1dh7hd.zip
 
-BuildRequires:	gtk2-devel
-Requires:	gtk-murrine-engine
+BuildRequires:  gtk2-devel
+Requires: gtk-murrine-engine
 
 %description
 This package contains the Elementary GTK Theme for the GNOME desktop.
 
 %prep
-%setup -q
-#%patch0
+%setup -q -n elementary
 
 %build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p %{buildroot}%{_datadir}/themes/elementary
-cp -a %{_builddir}/%{name}-%{version}/* %{buildroot}%{_datadir}/themes/elementary/
+cp -a %{_builddir}/elementary/* %{buildroot}%{_datadir}/themes/elementary/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -35,6 +33,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/themes/elementary/
 
 %changelog
+* Mon Jan  7 2013 Ian Firns <firnsy@kororaproject.org> 3.1-2
+- Fixed build process to use upstream source correctly.
+
 * Mon May 21 2012 Chris Smart <chris@kororaa.org> 3.1-1
 - Update to upstream 3.1 release.
 
