@@ -1,44 +1,117 @@
-Name:       elementary-gtk
-Version:    3.1
-Release:    2%{?dist}
-Summary:    Elementary GTK theme
+%global	short_name	eGTK
+%global	full_name	elementary GTK
 
-Group:      User Interface/Desktops
-License:    GPLv2+
-BuildArch:  noarch
-URL:        http://danrabbit.deviantart.com/art/elementary-gtk-theme-83104033
-Source0:    http://www.deviantart.com/download/83104033/elementary_gtk_theme_by_danrabbit-d1dh7hd.zip
+Name:		egtk
+Version:	3.1
+Release:	2%{?dist}
+Summary:	The %{short_name} (%{full_name}) themes for GTK+2, GTK+3, Metacity and Xfwm4
 
-BuildRequires:  gtk2-devel
-Requires: gtk-murrine-engine
+Group:		User Interface/Desktops
+License:	GPLv2
+URL:		https://launchpad.net/%{name}
+Source0:	https://launchpad.net/%{name}/3.x/%{version}/+download/elementary.tar.gz
+
+BuildArch:	noarch	
 
 %description
-This package contains the Elementary GTK Theme for the GNOME desktop.
+The official %{full_name} theme designed to be smooth, attractive, fast, and 
+usable.
+
+
+%package common
+Summary:	Files common to %{short_name} themes
+Group:		User Interface/Desktops
+
+%description common
+Files which are common to all %{short_name} (%full_name) themes.
+
+
+%package gtk2-theme
+Summary:	The %{short_name} theme for GTK+2
+Group:		User Interface/Desktops
+Requires:	%{name}-common = %{version}-%{release}, gtk-murrine-engine
+
+%description gtk2-theme
+Theme for GTK+2 as part of the %{short_name} (%full_name) theme.
+
+
+%package gtk3-theme
+Summary:	The %{short_name} theme for GTK+3
+Group:		User Interface/Desktops
+Requires:	%{name}-common = %{version}-%{release}, gtk-unico-engine
+
+%description gtk3-theme
+Theme for GTK+3 as part of the %{short_name} (%full_name) theme.
+
+
+%package metacity-theme
+Summary:	The %{short_name} theme for Metacity
+Group:		User Interface/Desktops
+Requires:	%{name}-common = %{version}-%{release}, metacity
+
+%description metacity-theme
+Theme for Metacity as part of the %{short_name} (%full_name) theme.
+
+
+%package xfwm4-theme
+Summary:	The %{short_name} theme for Xfwm4
+Group:		User Interface/Desktops
+Requires:	%{name}-common = %{version}-%{release}, xfwm4
+
+%description xfwm4-theme
+Theme for Xfwm4 as part of the %{short_name} (%full_name) theme.
+
 
 %prep
-%setup -q -n elementary
+%setup -q -c
+# Remove backup files
+find . -name '*~' -type f -exec rm -f '{}' \;
+# Remove Bazaar-related files
+rm -rf .bzr
+# Remove "index.theme"
+rm -f index.theme
+
 
 %build
+# Nothing to build
+
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p %{buildroot}%{_datadir}/themes/elementary
-cp -a %{_builddir}/elementary/* %{buildroot}%{_datadir}/themes/elementary/
+for dir in gtk-2.0 gtk-3.0 metacity-1 xfwm4
+do
+	mkdir -p -m755 %{buildroot}%{_datadir}/themes/%{short_name}/$dir
+	cp -pr ./*/$dir/* %{buildroot}%{_datadir}/themes/%{short_name}/$dir
+done
 
-%clean
-rm -rf $RPM_BUILD_ROOT
 
-%files
-%defattr(-,root,root,-)
-%{_datadir}/themes/elementary/
+%files common
+%doc ./*/AUTHORS ./*/CONTRIBUTORS ./*/COPYING
+%dir %{_datadir}/themes/%{short_name}/
+
+
+%files gtk2-theme
+%dir %{_datadir}/themes/%{short_name}/gtk-2.0/
+%{_datadir}/themes/%{short_name}/gtk-2.0/*
+
+
+%files gtk3-theme
+%dir %{_datadir}/themes/%{short_name}/gtk-3.0/
+%{_datadir}/themes/%{short_name}/gtk-3.0/*
+
+
+%files metacity-theme
+%dir %{_datadir}/themes/%{short_name}/metacity-1/
+%{_datadir}/themes/%{short_name}/metacity-1/*
+
+
+%files xfwm4-theme
+%dir %{_datadir}/themes/%{short_name}/xfwm4/
+%{_datadir}/themes/%{short_name}/xfwm4/*
+
 
 %changelog
-* Mon Jan  7 2013 Ian Firns <firnsy@kororaproject.org> 3.1-2
-- Fixed build process to use upstream source correctly.
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
-* Mon May 21 2012 Chris Smart <chris@kororaa.org> 3.1-1
-- Update to upstream 3.1 release.
-
-* Mon Mar 14 2011 Chris Smart <chris@kororaa.org> 2.1-1
-- Initial port from oxygen-gtk.spec.
-
+* Tue Jun 26 2012 Mattia Meneguzzo <odysseus@fedoraproject.org> - 3.1-1
+- Initial package for Fedora
