@@ -30,6 +30,7 @@ Files which are common to all %{short_name} (%full_name) themes.
 Summary:	The %{short_name} theme for GTK+2
 Group:		User Interface/Desktops
 Requires:	%{name}-common = %{version}-%{release}, gtk-murrine-engine
+Obsoletes: elementary-gtk
 
 %description gtk2-theme
 Theme for GTK+2 as part of the %{short_name} (%full_name) theme.
@@ -39,6 +40,8 @@ Theme for GTK+2 as part of the %{short_name} (%full_name) theme.
 Summary:	The %{short_name} theme for GTK+3
 Group:		User Interface/Desktops
 Requires:	%{name}-common = %{version}-%{release}, gtk-unico-engine
+Provides: elementary-gtk
+Obsoletes: elementary-gtk
 
 %description gtk3-theme
 Theme for GTK+3 as part of the %{short_name} (%full_name) theme.
@@ -48,6 +51,7 @@ Theme for GTK+3 as part of the %{short_name} (%full_name) theme.
 Summary:	The %{short_name} theme for Metacity
 Group:		User Interface/Desktops
 Requires:	%{name}-common = %{version}-%{release}, metacity
+Obsoletes: elementary-gtk
 
 %description metacity-theme
 Theme for Metacity as part of the %{short_name} (%full_name) theme.
@@ -57,6 +61,7 @@ Theme for Metacity as part of the %{short_name} (%full_name) theme.
 Summary:	The %{short_name} theme for Xfwm4
 Group:		User Interface/Desktops
 Requires:	%{name}-common = %{version}-%{release}, xfwm4
+Obsoletes: elementary-gtk
 
 %description xfwm4-theme
 Theme for Xfwm4 as part of the %{short_name} (%full_name) theme.
